@@ -4,9 +4,17 @@
         <servlet-name>WorkDateController</servlet-name>
         <servlet-class>Controller.WorkDateController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditWorkDateController</servlet-name>
+        <servlet-class>Controller.EditWorkDateController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>WorkDateController</servlet-name>
         <url-pattern>/WorkingTimeReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditWorkDateController</servlet-name>
+        <url-pattern>/EditReport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

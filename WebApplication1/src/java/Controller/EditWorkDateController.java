@@ -6,7 +6,7 @@ package Controller;
 
 import DAL.EmployeeDBContext;
 import Helper.*;
-import Model.*;
+import Model.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-public class WorkDateController extends HttpServlet {
-    
+public class EditWorkDateController extends HttpServlet {
+
     ControllerHelper conHelp = new ControllerHelper();
     DateTimeHelper dtHelp = new DateTimeHelper();
     
@@ -41,10 +41,10 @@ public class WorkDateController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet WorkDateController</title>");            
+            out.println("<title>Servlet EditWorkDateController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet WorkDateController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditWorkDateController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +60,8 @@ public class WorkDateController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         int[] ym = conHelp.year_month(request.getQueryString());                
         EmployeeDBContext db = new EmployeeDBContext();
         ArrayList<Employee> eList = db.loadEmployees();
@@ -70,8 +71,7 @@ public class WorkDateController extends HttpServlet {
         request.setAttribute("year", ym[1]);
         request.setAttribute("listDay", listDay);
         request.setAttribute("employees", eList);
-        request.getRequestDispatcher("View/WorkingTimeReport.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("View/EditReport.jsp").forward(request, response);
         //processRequest(request, response);
     }
 
@@ -86,9 +86,6 @@ public class WorkDateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
-        response.sendRedirect("WorkingTimeReport?"+month+"-"+year);
         //processRequest(request, response);
     }
 

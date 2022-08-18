@@ -1,36 +1,21 @@
 <%-- 
-    Document   : WorkingTimeReport
-    Created on : Aug 17, 2022, 5:01:27 PM
+    Document   : EditReport
+    Created on : Aug 18, 2022, 6:14:40 PM
     Author     : Admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:useBean id="ch" class="Helper.ControllerHelper"  scope="request"></jsp:useBean> 
-        <jsp:useBean id="dh" class="Helper.DateTimeHelper"  scope="request"></jsp:useBean>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Working Time Report</title>
+        <title>Edit Report</title>
     </head>
     <body> 
-        <h1 style="text-align:center;">Bảng chấm công tháng ${month}</h1> 
-    
-        <div>
-            <table border="1px solid" style="float:right;">
-                <tr>
-                    <td>Tháng</td>
-                    <td>${month}</td>
-                    <td>Số ngày CHỦ NHẬT</td>
-                    <td>${dh.countSunOfMonth(month, year)}</td>
-                    <td>Số ngày THỨ BẢY</td>
-                    <td>${dh.countSatOfMonth(month, year)}</td>
-                </tr>
-            </table>
-        </div>
+        <h1>Chỉnh sửa bảng chấm công tháng ${month}</h1> 
            
-        <form action="WorkingTimeReport?${month}-${year}" method="POST">
+        <form action="EditReport?${month}-${year}" method="POST">
             Tháng 
             <select name="month">
                 <option value="1" ${month==1?"selected":""}>1</option>
@@ -58,10 +43,6 @@
                 <td>Ho Ten</td>                
                 <td>Bo Phan</td>
                 <td>Chuc Vu</td>
-                <td>Nghi co phep</td>
-                <td>Nghi khong phep</td>
-                <td>Cong thuong</td>
-                <td>Cong CN</td>
                 <c:forEach var="d" items="${requestScope.listDay}">
                     <td>${d}</td>
                 </c:forEach>
@@ -72,10 +53,6 @@
                     <td>${em.name}</td>                    
                     <td>${em.department}</td>
                     <td>${em.position}</td>
-                    <td>${ch.totalLeaveDateHasPer(em.workdate, month, year, em.id)}</td>
-                    <td>${ch.totalLeaveDateNoPer(em.workdate, month, year, em.id)}</td>
-                    <td>${ch.countNorWorkDate(em.workdate, month, year, em.eid)}</td>
-                    <td>${ch.countSunWorkDate(em.workdate, month, year, em.eid)}</td>                    
                     <c:forEach var="d" items="${requestScope.listDay}">
                         <td>
                             <c:forEach items="${em.workdate}" var="wd">

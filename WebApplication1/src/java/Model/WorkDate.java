@@ -12,7 +12,8 @@ package Model;
  */
 public class WorkDate {
     private int id;
-    private Employee employee;
+    //private Employee employee;
+    private int eid;
     private int dow; //dayofweek
     private int day;
     private int month;
@@ -26,14 +27,22 @@ public class WorkDate {
     public void setId(int id) {
         this.id = id;
     }
-
-    public Employee getEmployee() {
-        return employee;
+    
+//      public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;    
+//    }
+    
+    public int getEid() {
+        return eid;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }   
+    public void setEid(int eid) {
+        this.eid = eid;
+    }
 
     public int getDow() {
         return dow;
@@ -68,8 +77,26 @@ public class WorkDate {
     }
     
 
-    public int getValue() {
-        return value;
+    public String getValue() {
+        String result = null;
+        switch (this.value) {
+            case 0:
+                result="0.5";
+                break;
+            case 1:
+                result="1";
+                break;
+            case 2:
+                result="KP";
+                break;
+            case 3:
+                result="CP";
+                break;
+            case 4:
+                result="NL";
+                break;
+        }
+        return result;
     }
 
     public void setValue(int value) {

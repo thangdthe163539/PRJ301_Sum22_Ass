@@ -63,7 +63,8 @@ public class EmployeeDBContext extends DBContext {
             while(rs.next()){
                 WorkDate wd = new WorkDate();
                 wd.setId(rs.getInt("wid"));
-                wd.setEmployee(this.getEmployeeById(rs.getInt("eid")));
+                //wd.setEmployee(this.getEmployeeById(rs.getInt("eid")));
+                wd.setEid(rs.getInt("eid"));
                 wd.setDow(dth.getDow(rs.getDate("wdate")));
                 wd.setDay(dth.getDay(rs.getDate("wdate")));
                 wd.setMonth(dth.getMonth(rs.getDate("wdate")));
@@ -99,7 +100,7 @@ public class EmployeeDBContext extends DBContext {
                 e.setDepartment(rs.getString("dname"));
                 e.setPosition(rs.getString("pname"));
                 e.setCoefficients_salary(rs.getInt("coefficients_salary"));
-                this.getWorkDateByEmployee(e.getId());
+                e.setWorkdate(this.getWorkDateByEmployee(e.getId()));
                 employees.add(e);
             }
         } catch (SQLException ex) {
@@ -111,12 +112,18 @@ public class EmployeeDBContext extends DBContext {
     
     public static void main(String[] args) {
         EmployeeDBContext em = new EmployeeDBContext();
-        try {
-            em.loadEmployees();
-            System.out.println("success");
-        } catch (Exception e) {
-            System.out.println("fail");
+        
+        ArrayList<Employee> listE = em.loadEmployees();
+        for (Employee e : listE) {
+            ArrayList<WorkDate> listW = e.getWorkdate();                
+            for (WorkDate w : listW) {
+                System.out.println("Name: "+e.getName()+"\nValue: "+w.getValue());
+            }
         }
-          
+        
+//        ArrayList<WorkDate> listW = em.getWorkDateByEmployee(1);                
+//                for (WorkDate w : listW) {
+//                    System.out.println("Eid: "+w.getEid()+" | Value: "+w.getValue());
+//        }
     }
 }
