@@ -5,6 +5,8 @@
 package Helper;
 
 
+import DAL.EmployeeDBContext;
+import Model.Holiday;
 import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,7 +57,13 @@ public class DateTimeHelper {
             //System.out.println(df.format(cal.getTime()));
         } 
         return listDays;
-    }   
+    }  
+    
+    public int totalDayofMonth(int month, int year){
+        Calendar cal = Calendar.getInstance();
+        int total = cal.getActualMaximum(Calendar.DAY_OF_MONTH)-this.countSunOfMonth(month, year);
+        return total;
+    }
    
     public int countSunOfMonth(int month, int year){
         int total = 0;
@@ -89,6 +97,36 @@ public class DateTimeHelper {
         return total;
     }
     
+    public Boolean checkSun(String str){
+        return str.contains("Sun");
+    }
+    
+    public Boolean checkSat(String str){
+        return str.contains("Sat");
+    }
+    
+    public Boolean checkHoliday(String str, int month, int year){
+        int count = 0;
+        EmployeeDBContext db = new EmployeeDBContext();
+        int day = Integer.parseInt(str.charAt(4)+""+str.charAt(5));
+        //System.out.println(day);
+        ArrayList<Holiday> hList = db.getListHoliday();
+        for (Holiday h : hList) {
+            if(h.getDay()== day && h.getMonth() == month && h.getYear() == year) count++;                
+        }
+        return count>0;
+    }
+    
+    public Boolean checkCurDay(int month, int year){
+        Calendar cur = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month-1, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out.println("cal:"+cal.getTime());
+        System.out.println("cur:"+cur.getTime());
+        System.out.println(cal.compareTo(cur));
+        return (cal.compareTo(cur)== -1);
+    }
+    
     public static void main(String[] args) {
         DateTimeHelper dth = new DateTimeHelper();
         //Date d = new Date();
@@ -97,7 +135,8 @@ public class DateTimeHelper {
 //        for (String listDay : listDays) {
 //            System.out.println(listDay);
 //        }
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        System.out.println(dth.getDow(Calendar.getInstance().getTime()));
+//        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//        System.out.println(dth.getDow(Calendar.getInstance().getTime()));
+        System.out.println(dth.checkCurDay(6,2022));
     }
 }

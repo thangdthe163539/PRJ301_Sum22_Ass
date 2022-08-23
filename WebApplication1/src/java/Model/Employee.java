@@ -19,6 +19,7 @@ public class Employee {
     private int coefficients_salary;
     
     private ArrayList<WorkDate> workdate = new ArrayList();
+    private ArrayList<LeaveDate> leavedate = new ArrayList();
 
     public int getId() {
         return id;
@@ -74,6 +75,14 @@ public class Employee {
 
     public void setWorkdate(ArrayList<WorkDate> workdate) {
         this.workdate = workdate;
+    }
+
+    public ArrayList<LeaveDate> getLeavedate() {
+        return leavedate;
+    }
+
+    public void setLeavedate(ArrayList<LeaveDate> leavedate) {
+        this.leavedate = leavedate;
     }
     
     

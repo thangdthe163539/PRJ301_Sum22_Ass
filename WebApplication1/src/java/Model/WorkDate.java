@@ -86,15 +86,7 @@ public class WorkDate {
             case 1:
                 result="1";
                 break;
-            case 2:
-                result="KP";
-                break;
-            case 3:
-                result="CP";
-                break;
-            case 4:
-                result="NL";
-                break;
+            
         }
         return result;
     }

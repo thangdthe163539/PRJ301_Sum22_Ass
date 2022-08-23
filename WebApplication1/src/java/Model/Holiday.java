@@ -8,14 +8,13 @@ package Model;
  *
  * @author Admin
  */
-public class LeaveDate {
+public class Holiday {
     private int id;
-    private int eid;
-    private int dow;
+    private int dow; //dayofweek
     private int day;
     private int month;
     private int year;
-    private int value;
+    private String name;
 
     public int getId() {
         return id;
@@ -31,16 +30,6 @@ public class LeaveDate {
 
     public void setDow(int dow) {
         this.dow = dow;
-    }
-
-   
-
-    public int getEid() {
-        return eid;
-    }
-
-    public void setEid(int eid) {
-        this.eid = eid;
     }
 
     public int getDay() {
@@ -67,36 +56,12 @@ public class LeaveDate {
         this.year = year;
     }
 
-    public String getValue() {
-        String result = null;
-        switch (this.value) {
-            case 1:
-                result="P";
-                break;
-            case 2:
-                result="KP";
-                break;
-            case 3:
-                result="Ô";
-                break;
-            case 4:
-                result="TS";
-                break;
-            case 5:
-                result="NB";
-                break;
-            case 6:
-                result="TN";
-                break;
-            case 7:
-                result="NL";
-                break;
-        }
-        return result;
+    public String getName() {
+        return name;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setName(String name) {
+        this.name = name;
     }
     
     

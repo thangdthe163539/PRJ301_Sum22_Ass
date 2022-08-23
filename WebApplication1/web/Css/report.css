@@ -1,0 +1,70 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Aug 22, 2022, 9:53:25 PM
+    Author     : Admin
+*/
+
+body{
+    overflow: scroll;
+}
+
+h1{
+    width: 100%;
+    margin: 30px;
+    text-align: center;
+}
+
+table td{
+    text-align: center;
+}
+
+.sun{
+    background-color: #99ccff;
+}
+.sat{
+    background-color: #ffff99;
+}
+.holiday{
+    background-color: #ff9999;
+}
+
+.green{
+    background-color: #ccffcc;
+}
+
+#rtable{
+    width: 100%;
+    display: block;
+}
+
+#rtable table{
+    padding-top: 70px;
+    float: right;
+}
+
+#rtable p{
+    float: left;
+}
+
+#rtable table td{
+    border: 1px solid;
+}
+
+#h1 {
+    padding-top: 120px;
+    width: 100%;
+    display: block;
+}
+
+#des{
+    float: right;
+}
+#des table {
+    border: 1px solid;
+}
+#des table td{
+    border: 1px solid;
+}

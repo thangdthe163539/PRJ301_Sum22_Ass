@@ -5,8 +5,7 @@
 package DAL;
 
 import Helper.DateTimeHelper;
-import Model.Employee;
-import Model.WorkDate;
+import Model.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,7 +55,7 @@ public class EmployeeDBContext extends DBContext {
                         "      ,[eid]\n" +
                         "      ,[wdate]\n" +
                         "      ,[value]\n" +
-                        "  FROM [Working] WHERE [eid]=?";
+                        "  FROM [WorkDate] WHERE [eid]=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
             ResultSet rs = stm.executeQuery();
@@ -76,6 +75,35 @@ public class EmployeeDBContext extends DBContext {
             Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return workdate;
+    }
+    
+    public ArrayList<LeaveDate> getLeaveDateByEmployee(int eid){
+        ArrayList<LeaveDate> leavedate = new ArrayList<>();
+        try {
+            String sql = "SELECT [lid]\n" +
+                        "      ,[eid]\n" +
+                        "      ,[ldate]\n" +
+                        "      ,[value]\n" +
+                        "  FROM [LeaveDate] WHERE eid=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                LeaveDate ld = new LeaveDate();
+                ld.setId(rs.getInt("lid"));
+                //wd.setEmployee(this.getEmployeeById(rs.getInt("eid")));
+                ld.setEid(rs.getInt("eid"));
+                ld.setDow(dth.getDow(rs.getDate("ldate")));
+                ld.setDay(dth.getDay(rs.getDate("ldate")));
+                ld.setMonth(dth.getMonth(rs.getDate("ldate")));
+                ld.setYear(dth.getYear(rs.getDate("ldate")));
+                ld.setValue(rs.getInt("value"));
+                leavedate.add(ld);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return leavedate;
     }
     
     public ArrayList<Employee> loadEmployees(){
@@ -101,6 +129,7 @@ public class EmployeeDBContext extends DBContext {
                 e.setPosition(rs.getString("pname"));
                 e.setCoefficients_salary(rs.getInt("coefficients_salary"));
                 e.setWorkdate(this.getWorkDateByEmployee(e.getId()));
+                e.setLeavedate(this.getLeaveDateByEmployee(e.getId()));
                 employees.add(e);
             }
         } catch (SQLException ex) {
@@ -109,21 +138,50 @@ public class EmployeeDBContext extends DBContext {
         return employees;
     }
     
+    public ArrayList<Holiday> getListHoliday(){
+        ArrayList<Holiday> holiday = new ArrayList<>();
+        try {
+            String sql = "SELECT [hid]\n" +
+                    "      ,[hname]\n" +
+                    "      ,[hdate]\n" +
+                    "  FROM [Holiday]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Holiday h = new Holiday();
+                h.setId(rs.getInt("hid"));
+                h.setDow(dth.getDow(rs.getDate("hdate")));
+                h.setDay(dth.getDay(rs.getDate("hdate")));
+                h.setMonth(dth.getMonth(rs.getDate("hdate")));
+                h.setYear(dth.getYear(rs.getDate("hdate")));
+                h.setName(rs.getString("hname"));
+                holiday.add(h);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return holiday;
+    }
     
     public static void main(String[] args) {
         EmployeeDBContext em = new EmployeeDBContext();
         
-        ArrayList<Employee> listE = em.loadEmployees();
-        for (Employee e : listE) {
-            ArrayList<WorkDate> listW = e.getWorkdate();                
-            for (WorkDate w : listW) {
-                System.out.println("Name: "+e.getName()+"\nValue: "+w.getValue());
-            }
-        }
-        
+//        ArrayList<Employee> listE = em.loadEmployees();
+////        for (Employee e : listE) {
+////            ArrayList<WorkDate> listW = e.getWorkdate();                
+////            for (WorkDate w : listW) {
+////                System.out.println("Name: "+e.getName()+"\nValue: "+w.getValue());
+////            }
+////        }
+//        
 //        ArrayList<WorkDate> listW = em.getWorkDateByEmployee(1);                
 //                for (WorkDate w : listW) {
 //                    System.out.println("Eid: "+w.getEid()+" | Value: "+w.getValue());
 //        }
+
+            ArrayList<Holiday> hlist = em.getListHoliday();
+            for (Holiday h : hlist) {
+                System.out.println("id: "+h.getId()+",Name: "+h.getName()+",day: "+h.getDay()+",month: "+h.getMonth()+",year: "+h.getYear());
+            }
     }
 }

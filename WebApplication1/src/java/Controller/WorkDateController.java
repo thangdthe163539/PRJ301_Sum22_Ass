@@ -61,13 +61,16 @@ public class WorkDateController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int[] ym = conHelp.year_month(request.getQueryString());                
+        int[] ym = conHelp.year_month(request.getQueryString());
+        String year_month = String.valueOf(ym[1])+"-"+(ym[0]>9?String.valueOf(ym[0]):"0"+String.valueOf(ym[0]));
         EmployeeDBContext db = new EmployeeDBContext();
+        ArrayList<Holiday> hList = db.getListHoliday();
         ArrayList<Employee> eList = db.loadEmployees();
         ArrayList<String> listDay = dtHelp.getListDayOfMonth(ym[0]-1, ym[1]);
-        
+        request.setAttribute("ym", year_month);
         request.setAttribute("month", ym[0]);
         request.setAttribute("year", ym[1]);
+        request.setAttribute("listHoli", hList);
         request.setAttribute("listDay", listDay);
         request.setAttribute("employees", eList);
         request.getRequestDispatcher("View/WorkingTimeReport.jsp").forward(request, response);
@@ -86,9 +89,10 @@ public class WorkDateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
-        response.sendRedirect("WorkingTimeReport?"+month+"-"+year);
+//        int month = Integer.parseInt(request.getParameter("month"));
+//        int year = Integer.parseInt(request.getParameter("year"));
+            int[] ym = conHelp.year_month(request.getParameter("month-year"));
+        response.sendRedirect("WorkingTimeReport?"+ym[1]+"-"+ym[0]);
         //processRequest(request, response);
     }
 
