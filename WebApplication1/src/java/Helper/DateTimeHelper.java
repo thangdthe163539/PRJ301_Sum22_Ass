@@ -121,9 +121,9 @@ public class DateTimeHelper {
         Calendar cur = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         cal.set(year, month-1, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        System.out.println("cal:"+cal.getTime());
-        System.out.println("cur:"+cur.getTime());
-        System.out.println(cal.compareTo(cur));
+//        System.out.println("cal:"+cal.getTime());
+//        System.out.println("cur:"+cur.getTime());
+//        System.out.println(cal.compareTo(cur));
         return (cal.compareTo(cur)== -1);
     }
     
